@@ -3,6 +3,7 @@ public class Hero {
     public int Health;
     public int Level;
     public int Experience;
+    
     public Hero(string name, int health) {
         Name = name;
         Health = health;
