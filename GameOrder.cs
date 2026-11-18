@@ -1,37 +1,49 @@
+
 public class GameOrder
 {
     public int Id { get; private set; }
-
-    private Game? _game;
-    private bool _isFinished;
+    public Game? OrderedGame { get; private set; }
+    public GameOrderStatus Status { get; private set; }
 
     public GameOrder(int id)
     {
         Id = id;
-        _game = null;
-        _isFinished = false;
+        OrderedGame = null;
+        Status = GameOrderStatus.Open;
     }
 
     public bool TryStart(Game game)
     {
-        if (_game != null || game.Amount <= 0)
+        if (Status != GameOrderStatus.Open || game.Amount <= 0)
         {
             return false;
         }
 
-        _game = game;
+        OrderedGame = game;
+        Status = GameOrderStatus.Active;
         return true;
     }
 
     public bool TryFinish()
     {
-        if (_game == null || _isFinished)
+        if (Status != GameOrderStatus.Active || OrderedGame == null)
         {
             return false;
         }
 
-        _game.RemoveAmount();
-        _isFinished = true;
+        OrderedGame.RemoveAmount();
+        Status = GameOrderStatus.Finished;
+        return true;
+    }
+
+    public bool TryCancel()
+    {
+        if (Status != GameOrderStatus.Open && Status != GameOrderStatus.Active)
+        {
+            return false;
+        }
+
+        Status = GameOrderStatus.Cancelled;
         return true;
     }
 }

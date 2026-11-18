@@ -141,3 +141,18 @@ if (Cyberpunk_game != null)
         Console.WriteLine($"Количество после заказа: {updatedGame.Amount}");
     }
 }
+Console.WriteLine("--- ПРОВЕРКА ЗАКАЗОВ ---");
+
+GameOrderManager manager = new GameOrderManager();
+
+GameOrder order1 = new GameOrder(1);
+GameOrder order2 = new GameOrder(2);
+
+manager.AddOrder(order1);
+manager.AddOrder(order2);
+
+Console.WriteLine($"Первый заказ: {manager.TryStart(order1, Cyberpunk)}");
+Console.WriteLine($"Второй заказ: {manager.TryStart(order2, Cyberpunk)}");
+
+Console.WriteLine($"Отмена первого: {order1.TryCancel()}");
+Console.WriteLine($"Повторный заказ: {manager.TryStart(order2, Cyberpunk)}");
