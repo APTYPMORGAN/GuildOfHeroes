@@ -21,11 +21,71 @@ Console.WriteLine();
 Witcher.AddAmount(5);
 Rdr2.AddAmount(4);
 
-List<Game> games = new List<Game>();
-games.Add(Witcher);
-games.Add(Rdr2);
-games.Add(Cyberpunk);
-games.Add(new Game("Grand Theft Auto V", "Приключенческий боевик", 2013));
+
+GameStore store = new GameStore();
+Console.WriteLine($"Ведьмак добавлен: {store.AddGame(Witcher)}");
+Console.WriteLine($"RDR 2 добавлена: {store.AddGame(Rdr2)}");
+Console.WriteLine($"Cyberpunk добавлен: {store.AddGame(Cyberpunk)}");
+
+Game gta = new Game("Grand Theft Auto V", "Приключенческий боевик", 2013);
+Console.WriteLine($"GTA добавлена: {store.AddGame(gta)}");
+
+Game anotherWitcher = new Game(" ведьмак 3: ДИКАЯ ОХОТА ", "Ролевая игра", 2015);
+Console.WriteLine($"Повтор Ведьмака добавлен: {store.AddGame(anotherWitcher)}");
+
+Console.WriteLine();
+
+Console.WriteLine($"Количество игр в магазине: {store.GameCount}");
+Console.WriteLine();
+
+List<Game> games = store.GetGames();
+
+if (games.Count > 0)
+{
+    Console.WriteLine($"Первая игра: {games[0].Name}");
+    Console.WriteLine($"Последняя игра: {games[games.Count - 1].Name}");
+}
+
+Console.WriteLine();
+
+foreach (Game game in games)
+{
+    Console.WriteLine(game.GetInfo());
+    Console.WriteLine();
+}
+
+Game? found = store.FindGameByName("  ВЕДЬМАК 3: ДИКАЯ ОХОТА ");
+
+if (found != null)
+{
+    Console.WriteLine($"Найдена игра: {found.Name}");
+}
+else
+{
+    Console.WriteLine("Игра не найдена.");
+}
+
+Game? notFound = store.FindGameByName("Minecraft");
+
+if (notFound != null)
+{
+    Console.WriteLine($"Найдена игра: {notFound.Name}");
+}
+else
+{
+    Console.WriteLine("Minecraft не найдена.");
+}
+
+Console.WriteLine();
+
+Console.WriteLine("--- ИГРЫ В НАЛИЧИИ ---");
+Console.WriteLine($"Всего игр в наличии: {store.CountAvailableGames()}");
+
+Console.WriteLine();
+
+Console.WriteLine($"Количество до удаления: {store.GameCount}");
+Console.WriteLine($"Cyberpunk удалена: {store.RemoveGame("Cyberpunk 2077")}");
+Console.WriteLine($"Количество после удаления: {store.GameCount}");
 if (games.Count > 0)
 {
     Console.WriteLine($"Количество игр в магазине: {games.Count}");

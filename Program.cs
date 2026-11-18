@@ -9,43 +9,40 @@
 // alexander.Heal(10);
 
 // Guild guild = new Guild("Гильдия героев");
-// guild.Heroes.Add(yaroslav);
-// guild.Heroes.Add(anastasia);
-// guild.Heroes.Add(artem);
-// guild.Heroes.Add(alexander);
-// guild.Heroes.Add(sergey);
+// guild.AddHero(yaroslav);
+// guild.AddHero(anastasia);
+// guild.AddHero(artem);
+// guild.AddHero(alexander);
+// guild.AddHero(sergey);
+// List<Hero> members = guild.GetMembers();
 // Console.WriteLine($">>> {guild.Name}: перекличка <<<");
-// Console.WriteLine($"Участников: {guild.Heroes.Count}");
-// if (guild.Heroes.Count > 0)
+// Console.WriteLine($"Участников: {guild.MemberCount}");
+// if (members.Count > 0)
 // {
-//     Console.WriteLine($"Первый: {guild.Heroes[0].Name}");
-//     Console.WriteLine($"Последний: {guild.Heroes[guild.Heroes.Count - 1].Name}");
+//     Console.WriteLine($"Первый: {members[0].Name}");
+//     Console.WriteLine($"Последний: {members[members.Count - 1].Name}");
 // }
 // Console.WriteLine();
-// foreach (Hero hero in guild.Heroes)
+// foreach (Hero hero in members)
 // {
 //     Console.WriteLine(hero.GetInfo());
 //     Console.WriteLine();
 // }
 
-// int strongCount = 0;
-// foreach (Hero hero in guild.Heroes)
-// {
-//     if (hero.Health >= 120)
-//     {
-//         strongCount += 1;
-//     }
+// Console.WriteLine($"Могут нести тяжёлые ящики (здоровье от 120): {guild.CountHealthy(120)} героя");
+// Hero? strongest = guild.FindStrongest();
+// if (strongest != null) {
+//     Console.WriteLine($"Самый здоровый: {strongest.Name} ({strongest.Health})");
 // }
-// Console.WriteLine($"Могут нести тяжёлые ящики (здоровье от 120): {strongCount} героя");
-// Hero strongest = guild.Heroes[0];
-// if (guild.Heroes.Count > 0)
+// Hero? found = guild.FindHeroByName(" аРтЁм ");
+// if (found != null)
 // {
-//     foreach (Hero hero in guild.Heroes)
-//     {
-//         if (hero.Health > strongest.Health)
-//         {
-//             strongest = hero;
-//         }
-//     }
+//     Console.WriteLine($"Найден по запросу « аРтЁм »: {found.Name}");
 // }
-// Console.WriteLine($"Самый здоровый: {strongest.Name}, здоровье: {strongest.Health}");
+// else
+// {
+//     Console.WriteLine("По запросу « аРтЁм » никого нет.");
+// }
+// Console.WriteLine($"Повтор Александра принят: {guild.AddHero(alexander)}");
+// Console.WriteLine($"Удалён отсутствующий: {guild.RemoveHero("Борис")}");
+// Console.WriteLine($"Участников после проверок: {guild.MemberCount}");
