@@ -62,8 +62,17 @@ public class Game
         Amount += amount;
     }
 
-    public bool IsAvailaible() {
+    public bool IsAvailaible()
+    {
         return Amount > 0;
+    }
+    
+    public void RemoveAmount()
+    {
+        if (Amount > 0)
+        {
+            Amount--;
+        }
     }
 
     public string GetInfo() {

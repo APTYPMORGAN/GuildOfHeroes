@@ -20,6 +20,7 @@ Console.WriteLine(BrokenGame.GetInfo());
 Console.WriteLine();
 Witcher.AddAmount(5);
 Rdr2.AddAmount(4);
+Cyberpunk.AddAmount(3);
 
 
 GameStore store = new GameStore();
@@ -48,9 +49,9 @@ if (games.Count > 0)
 
 Console.WriteLine();
 
-foreach (Game game in games)
+foreach (Game currentGame in games)
 {
-    Console.WriteLine(game.GetInfo());
+    Console.WriteLine(currentGame.GetInfo());
     Console.WriteLine();
 }
 
@@ -84,8 +85,6 @@ Console.WriteLine($"Всего игр в наличии: {store.CountAvailableGa
 Console.WriteLine();
 
 Console.WriteLine($"Количество до удаления: {store.GameCount}");
-Console.WriteLine($"Cyberpunk удалена: {store.RemoveGame("Cyberpunk 2077")}");
-Console.WriteLine($"Количество после удаления: {store.GameCount}");
 if (games.Count > 0)
 {
     Console.WriteLine($"Количество игр в магазине: {games.Count}");
@@ -94,20 +93,20 @@ if (games.Count > 0)
 }
 Console.WriteLine();
 
-foreach (Game game in games)
+foreach (Game currentGame in games)
 {
-    Console.WriteLine(game.GetInfo());
+    Console.WriteLine(currentGame.GetInfo());
     Console.WriteLine();
 }
 
 Console.WriteLine("--- ИГРЫ ДОСТУПНЫЕ В НАЛИЧИЕ ---");
 Console.WriteLine();
 int count_isavaliable = 0;
-foreach (Game game in games)
+foreach (Game currentGame in games)
 {
-    if (game.IsAvailaible())
+    if (currentGame.IsAvailaible())
     {
-        Console.WriteLine(game.Name);
+        Console.WriteLine(currentGame.Name);
         count_isavaliable += 1;
     }
 }
@@ -116,3 +115,29 @@ Console.WriteLine($"Всего в наличие игр: {count_isavaliable}");
 Console.WriteLine();
 Console.WriteLine("Обращение к первой игре из списка через сам список:");
 Console.WriteLine($"Количество Ведьмака на складе - {games[0].Amount}");
+
+Console.WriteLine("--- ЗАКАЗ ИГРЫ ---");
+
+Game? Cyberpunk_game = store.FindGameByName("Cyberpunk 2077");
+
+if (Cyberpunk_game != null)
+{
+    GameOrder order = new GameOrder(1);
+
+    Console.WriteLine($"Количество до заказа: {Cyberpunk_game.Amount}");
+
+    Console.WriteLine($"Начать заказ: {order.TryStart(Cyberpunk_game)}");
+
+    Console.WriteLine($"Начать ещё раз: {order.TryStart(Cyberpunk_game)}");
+
+    Console.WriteLine($"Завершить заказ: {order.TryFinish()}");
+
+    Console.WriteLine($"Завершить ещё раз: {order.TryFinish()}");
+
+    Game? updatedGame = store.FindGameByName("Cyberpunk 2077");
+
+    if (updatedGame != null)
+    {
+        Console.WriteLine($"Количество после заказа: {updatedGame.Amount}");
+    }
+}
